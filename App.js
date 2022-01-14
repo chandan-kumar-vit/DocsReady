@@ -11,6 +11,7 @@ import UserDocs from './screens/UserDocs';
 import { Provider as StoreProvider } from 'react-redux';
 import { Store } from './redux/store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,6 +45,20 @@ const App = () => {
 const Home = () => {
   return (
     <Tab.Navigator>
+      <Tab.Screen name="userDocs" component={UserDocs} options={{
+        title: 'My Documents',
+        headerStyle: {
+          backgroundColor: '#fff',
+        },
+        headerTintColor: 'black',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="home" color={color} size={size} />
+        ),
+      }} />
       <Tab.Screen name="addDoc" component={AddDoc} options={{
         title: 'Add Document',
         headerStyle: {
@@ -54,16 +69,9 @@ const Home = () => {
           fontWeight: 'bold',
         },
         tabBarActiveTintColor: 'tomato',
-      }} />
-      <Tab.Screen name="userDocs" component={UserDocs} options={{
-        title: 'My Documents',
-        headerStyle: {
-          backgroundColor: '#fff',
-        },
-        headerTintColor: 'black',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="upload" color={color} size={size} />
+        ),
       }} />
     </Tab.Navigator>
 

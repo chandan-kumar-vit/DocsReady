@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setDocs } from '../redux/action'
 import { Card, Title, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const UserDocs = ({ navigation }) => {
 
@@ -58,7 +59,7 @@ const UserDocs = ({ navigation }) => {
                     </Card>
                 )
             })}
-
+        
         </ScrollView>
     )
 }
