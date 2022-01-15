@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AddDoc from './screens/AddDoc';
 import UserDocs from './screens/UserDocs';
+import Camera from './screens/Camera';
 import { Provider as StoreProvider } from 'react-redux';
 import { Store } from './redux/store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -34,6 +35,7 @@ const App = () => {
               },
             }} />
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            <Stack.Screen name="Camera" component={Camera}/>
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
