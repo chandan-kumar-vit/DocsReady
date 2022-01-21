@@ -45,21 +45,23 @@ const UserDocs = ({ navigation }) => {
         <ScrollView>
             {docs.map((element) => {
                 return (
-                    <Card key={element.id}>
-                        <Card.Content>
-                            <Title>{element.card}</Title>
-                            <Paragraph>{element.number}</Paragraph>
-                            <Image
-                                source={{
-                                    uri: element.fireBaseRef,
-                                }}
-                                style={{ width: 380, height: 200 }}
-                            />
-                        </Card.Content>
-                    </Card>
+                    <View key={element.id}>
+                        <Card >
+                            <Card.Content>
+                                <Title>{element.card}</Title>
+                                <Paragraph>{element.number}</Paragraph>
+                                <Image
+                                    source={{
+                                        uri: element.fireBaseRef,
+                                    }}
+                                    style={{ width: 380, height: 200 }}
+                                />
+                            </Card.Content>
+                        </Card>
+                    </View>
                 )
             })}
-        
+
         </ScrollView>
     )
 }

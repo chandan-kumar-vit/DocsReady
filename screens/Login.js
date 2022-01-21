@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { Text, StyleSheet, Dimensions, ScrollView, View } from 'react-native'
 import { Button, Avatar, TextInput, Colors, ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = ({ navigation }) => {
@@ -43,7 +43,7 @@ const Login = ({ navigation }) => {
 
     return (
 
-        <View style={styles.items}>
+        <ScrollView style={styles.items}>
 
             {myState.loading && (
                 <View style={styles.atCenter}>
@@ -86,7 +86,7 @@ const Login = ({ navigation }) => {
                 </View>
             </View>)}
 
-        </View>
+        </ScrollView>
     )
 
 }

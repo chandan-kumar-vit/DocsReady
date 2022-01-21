@@ -19,11 +19,12 @@ const Camera = ({ navigation }) => {
             const newFilePath = RNFS.ExternalDirectoryPath + '/newFile.jpg';
             RNFS.moveFile(filePath, newFilePath)
                 .then(() => {
-                    console.log('IMAGE MOVED', filePath, '-- to --', newFilePath);
+                    //console.log('IMAGE MOVED', filePath, '-- to --', newFilePath);
                 })
                 .catch(error => {
                     console.log(error);
                 })
+            navigation.goBack()
         } catch (error) {
             console.log(error);
         }
