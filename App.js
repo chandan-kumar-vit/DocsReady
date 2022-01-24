@@ -11,6 +11,8 @@ import UserDocs from './screens/UserDocs';
 import Camera from './screens/Camera';
 import Profile from './screens/Profile';
 import SignUp from './screens/SignUp'
+import QRScanner from './screens/QRScanner';
+import DocViewer from './screens/DocViewer';
 import { Provider as StoreProvider } from 'react-redux';
 import { Store } from './redux/store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -42,13 +44,15 @@ const App = () => {
               title: 'Join DocsReady',
               headerStyle: {
                 backgroundColor: '#fff',
-              }, 
+              },
               headerTintColor: 'black',
               headerTitleStyle: {
                 fontWeight: 'bold',
               },
             }}
             />
+            <Stack.Screen name="QRScan" component={QRScanner} />
+            <Stack.Screen name="DocViewer" component={DocViewer} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
