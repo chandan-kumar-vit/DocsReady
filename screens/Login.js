@@ -7,8 +7,15 @@ const Login = ({ navigation }) => {
     const [myUsername, setUsername] = useState('');
     const [myPassword, setPassword] = useState('');
     const [myState, setState] = useState({
-        loading: false
+        loading: false,
+        secure: true
     })
+
+    const handleSecure = () => {
+        setState({
+            secure: myState.secure ? false : true
+        })
+    }
 
     const host = 'https://docsready-server.herokuapp.com';
 
@@ -32,6 +39,7 @@ const Login = ({ navigation }) => {
         if (logDetails.success) {
 
             await AsyncStorage.setItem('authtoken', logDetails.authtoken)
+            setState({ loading: false })
             navigation.navigate('Home')
         }
 
@@ -58,8 +66,8 @@ const Login = ({ navigation }) => {
                 <View style={styles.bottomPadding}>
                     <TextInput
                         mode="outlined"
-                        label="Username/email"
-                        placeholder="email"
+                        label="Aadhar Number"
+                        placeholder="eg: 123412341234"
                         value={myUsername}
                         onChangeText={myUsername => setUsername(myUsername)}
                     />
@@ -68,19 +76,19 @@ const Login = ({ navigation }) => {
                     <TextInput
                         mode="outlined"
                         label="Password"
-                        secureTextEntry
+                        secureTextEntry={myState.secure}
                         value={myPassword}
                         onChangeText={myPassword => setPassword(myPassword)}
-                        right={<TextInput.Icon name="eye" />}
+                        right={<TextInput.Icon name="eye" onPress={handleSecure} />}
                     />
                 </View>
                 <View style={styles.bottomPadding}>
                     <Button mode="contained" onPress={handleLogin} color={Colors.blue800}>
-                        Sign In
+                        Log In
                     </Button>
                 </View>
                 <View style={styles.bottomPadding}>
-                    <Button mode="contained" onPress={() => console.log('Pressed')} color={Colors.red600}>
+                    <Button mode="contained" onPress={() => navigation.navigate("Signup")} color={Colors.red600}>
                         Sign Up
                     </Button>
                 </View>

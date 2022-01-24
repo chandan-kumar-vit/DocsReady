@@ -1,16 +1,16 @@
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, RefreshControl } from 'react-native'
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setDocs } from '../redux/action'
-import { Card, Title, Paragraph } from 'react-native-paper';
+import { Card, Title, Paragraph, ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 const UserDocs = ({ navigation }) => {
 
     const host = 'https://docsready-server.herokuapp.com';
     const { docs } = useSelector(state => state.dataReducer);
     const dispatch = useDispatch();
+    const [refreshing, setRefreshing] = React.useState(true);
 
     const callapi = async () => {
         try {
@@ -29,6 +29,7 @@ const UserDocs = ({ navigation }) => {
             });
 
             const docDetails = await response.json();
+            setRefreshing(false);
             dispatch(setDocs(docDetails));
 
         } catch (err) {
@@ -42,7 +43,13 @@ const UserDocs = ({ navigation }) => {
 
     return (
 
-        <ScrollView>
+        <ScrollView refreshControl={
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={callapi}
+            />
+        }>
+            {refreshing ? <ActivityIndicator /> : null}
             {docs.map((element) => {
                 return (
                     <View key={element.id}>
@@ -54,7 +61,7 @@ const UserDocs = ({ navigation }) => {
                                     source={{
                                         uri: element.fireBaseRef,
                                     }}
-                                    style={{ width: 380, height: 200 }}
+                                    style={{ width: "100%", height: 200 }}
                                 />
                             </Card.Content>
                         </Card>

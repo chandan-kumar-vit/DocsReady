@@ -9,6 +9,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AddDoc from './screens/AddDoc';
 import UserDocs from './screens/UserDocs';
 import Camera from './screens/Camera';
+import Profile from './screens/Profile';
+import SignUp from './screens/SignUp'
 import { Provider as StoreProvider } from 'react-redux';
 import { Store } from './redux/store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -35,7 +37,18 @@ const App = () => {
               },
             }} />
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            <Stack.Screen name="Camera" component={Camera}/>
+            <Stack.Screen name="Camera" component={Camera} />
+            <Stack.Screen name="Signup" component={SignUp} options={{
+              title: 'Join DocsReady',
+              headerStyle: {
+                backgroundColor: '#fff',
+              }, 
+              headerTintColor: 'black',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
@@ -73,6 +86,20 @@ const Home = () => {
         tabBarActiveTintColor: 'tomato',
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="upload" color={color} size={size} />
+        ),
+      }} />
+      <Tab.Screen name="userProfile" component={Profile} options={{
+        title: 'Profile',
+        headerStyle: {
+          backgroundColor: '#fff',
+        },
+        headerTintColor: 'black',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="face" color={color} size={size} />
         ),
       }} />
     </Tab.Navigator>

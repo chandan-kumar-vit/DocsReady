@@ -5,7 +5,7 @@ import {
     StyleSheet,
     ScrollView
 } from 'react-native';
-import { Button, Colors, TextInput, RadioButton, Text } from 'react-native-paper';
+import { Button, Colors, TextInput, RadioButton, Text, ActivityIndicator } from 'react-native-paper';
 import RNFS from 'react-native-fs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,6 +14,8 @@ const AddDoc = ({ navigation }) => {
     const [value, setValue] = React.useState('aadhar');
     const [other, setOther] = React.useState('');
     const [myFileId, setFileId] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
+
     const openCamera = () => {
         navigation.navigate('Camera')
     }
@@ -22,32 +24,13 @@ const AddDoc = ({ navigation }) => {
     const host = 'https://docsready-server.herokuapp.com';
 
     const handleUploadFile = async () => {
+
+        setLoading(true);
         const token = await AsyncStorage.getItem('authtoken')
-        const base64File = await RNFS.readFile(path, "base64");
+        //const base64File = await RNFS.readFile(path, "base64");
 
         let url = `${host}/api/docs/add?card=${value === 'other' ? other : value}&number=${myFileId}`;
-        console.log(url);
-
-        // let myHeaders = new Headers();
-        // myHeaders.append("authtoken", token);
-
-        // var formdata = new FormData();
-        // formdata.append("file", base64File);
-
-        // var requestOptions = {
-        //     method: 'POST',
-        //     headers: myHeaders,
-        //     body: formdata,
-        //     redirect: 'follow'
-        // };
-
-        // const output= await fetch(url, requestOptions)
-        //     .then(response => response.text())
-        //     .then(result => console.log(result))
-        //     .catch(error => console.log('error', error));
-        //const output = await response.json();
-        // console.log(response);
-
+        //console.log(url);
         let files = [
             {
                 name: "file",
@@ -57,7 +40,7 @@ const AddDoc = ({ navigation }) => {
             },
         ];
 
-        RNFS.uploadFiles({
+        const fileDetails = await RNFS.uploadFiles({
             toUrl: url,
             files: files,
             method: "POST",
@@ -69,59 +52,69 @@ const AddDoc = ({ navigation }) => {
             // // You can use this callback to show a progress indicator.
             // progress: ({ totalBytesSent, totalBytesExpectedToSend }) => { }
         });
+        //console.log(fileDetails);
+        setValue('aadhar');
+        setOther('')
+        setFileId('')
+        setLoading(false);
+        alert("File Uploaded Successfully! You may refresh My Documents to to view your file.");
     }
 
 
     return (
         <ScrollView style={styles.container}>
-            <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
-                <View>
-                    <Text>Aadhar</Text>
-                    <RadioButton value="Aadhar" />
-                </View>
-                <View>
-                    <Text>PAN</Text>
-                    <RadioButton value="PAN" />
-                </View>
-                <View>
-                    <Text>Driving License</Text>
-                    <RadioButton value="DrivingLicense" />
-                </View>
-                <View>
-                    <Text>Other</Text>
-                    <RadioButton value="other" />
-                </View>
-            </RadioButton.Group>
-            {value === 'other' &&
+
+            {loading ? <ActivityIndicator /> : <View>
+
+                <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
+                    <View>
+                        <Text>Aadhar</Text>
+                        <RadioButton value="Aadhar" />
+                    </View>
+                    <View>
+                        <Text>PAN</Text>
+                        <RadioButton value="PAN" />
+                    </View>
+                    <View>
+                        <Text>Driving License</Text>
+                        <RadioButton value="DrivingLicense" />
+                    </View>
+                    <View>
+                        <Text>Other</Text>
+                        <RadioButton value="other" />
+                    </View>
+                </RadioButton.Group>
+                {value === 'other' &&
+                    <View style={styles.bottomPadding}>
+                        <TextInput
+                            mode='flat'
+                            placeholder='enter file name eg: dob certificate'
+                            value={other}
+                            onChangeText={other => setOther(other)}
+                        />
+                    </View>}
+
                 <View style={styles.bottomPadding}>
                     <TextInput
-                        mode='flat'
-                        placeholder='enter file name eg: dob certificate'
-                        value={other}
-                        onChangeText={other => setOther(other)}
+                        placeholder='enter file unique id'
+                        value={myFileId}
+                        onChangeText={myFileId => setFileId(myFileId)}
                     />
-                </View>}
+                </View>
 
-            <View style={styles.bottomPadding}>
-                <TextInput
-                    placeholder='enter file unique id'
-                    value={myFileId}
-                    onChangeText={myFileId => setFileId(myFileId)}
-                />
+                <View>
+                    <Button mode="contained" onPress={openCamera} color={Colors.blue800}>
+                        Camera
+                    </Button>
+                </View>
+
+                <View style={styles.bottomPadding}>
+                    <Button mode="contained" onPress={handleUploadFile} color={Colors.green800} disabled={myFileId === '' ? true : false}>
+                        Upload File
+                    </Button>
+                </View>
             </View>
-
-            <View>
-                <Button mode="contained" onPress={openCamera} color={Colors.blue800}>
-                    Camera
-                </Button>
-            </View>
-
-            <View style={styles.bottomPadding}>
-                <Button mode="contained" onPress={handleUploadFile} color={Colors.green800} disabled={myFileId === '' ? true : false}>
-                    Upload File
-                </Button>
-            </View>
-
+            }
 
         </ScrollView>
     )
