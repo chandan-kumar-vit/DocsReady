@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setDocs } from '../redux/action'
 import { Card, Title, Paragraph, ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const UserDocs = ({ navigation }) => {
 
@@ -64,6 +65,10 @@ const UserDocs = ({ navigation }) => {
                                     style={{ width: "100%", height: 200 }}
                                 />
                             </Card.Content>
+                            <View style={{ paddingLeft: 20, paddingTop: 7, flexDirection: 'row' }}>
+                                <Icon size={40} color="black" name="share" onPress={() => { navigation.navigate('QRCodeGen', { url: element.fireBaseRef }) }} />
+                                <Icon size={40} color="black" name="remove-circle-sharp" />
+                            </View>
                         </Card>
                     </View>
                 )

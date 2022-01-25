@@ -13,6 +13,7 @@ import Profile from './screens/Profile';
 import SignUp from './screens/SignUp'
 import QRScanner from './screens/QRScanner';
 import DocViewer from './screens/DocViewer';
+import QRCodeGen from './screens/QRCodeGen';
 import { Provider as StoreProvider } from 'react-redux';
 import { Store } from './redux/store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -53,6 +54,7 @@ const App = () => {
             />
             <Stack.Screen name="QRScan" component={QRScanner} />
             <Stack.Screen name="DocViewer" component={DocViewer} />
+            <Stack.Screen name="QRCodeGen" component={QRCodeGen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
