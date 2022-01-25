@@ -5,13 +5,13 @@ import { RNCamera } from 'react-native-camera';
 
 const QRScanner = ({ navigation }) => {
     const onSuccess = (e) => {
-        console.log(e.data);
-        navigation.navigate('DocViewer');
+        //console.log(e.data);
+        navigation.navigate('DocViewer', { url: e.data });
     };
     return (
-        <View style={{height:'100%'}}>
+        <View style={{ height: '100%' }}>
             <QRCodeScanner
-                onRead={onSuccess}        
+                onRead={onSuccess}
                 showMarker
             />
         </View>

@@ -52,9 +52,9 @@ const App = () => {
               },
             }}
             />
-            <Stack.Screen name="QRScan" component={QRScanner} />
-            <Stack.Screen name="DocViewer" component={DocViewer} />
-            <Stack.Screen name="QRCodeGen" component={QRCodeGen} />
+            <Stack.Screen name="QRScan" component={QRScanner} options={{ title: 'Scan QR Code', }} />
+            <Stack.Screen name="DocViewer" component={DocViewer} options={{ title: 'Shared File' }} />
+            <Stack.Screen name="QRCodeGen" component={QRCodeGen} options={{ title: 'QR Code to Share' }} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

@@ -16,7 +16,7 @@ const Profile = ({ navigation }) => {
 
     return (
         <ScrollView style={styles.container}>
-            <View>
+            <View style={{ paddingBottom: 15 }}>
                 <Button mode='contained' color={Colors.blue800} onPress={handleQRScanner}>QR Scan</Button>
             </View>
             <View>
